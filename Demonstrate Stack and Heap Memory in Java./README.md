@@ -24,25 +24,40 @@ Local Variable (marks): 85
 
 ### Solution: `Student.java`
 ```java
-public class Student {
-    int age;                       // instance variable -> stored in the heap, inside the object
 
-    Student(int age) {
-        this.age = age;
-    }
+import java.util.Scanner;
 
-    void display() {
-        int marks = 85;            // local variable -> stored in the stack frame of display()
+class Student {
+    int age; // Instance variable
+
+    void display(int m) {
+        int marks = m; // Local variable
+
         System.out.println("Instance Variable (age): " + age);
         System.out.println("Local Variable (marks): " + marks);
     }
+}
 
+public class Main {
     public static void main(String[] args) {
-        Student s = new Student(20);   // 's' (reference) -> stack, object -> heap
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Age: ");
+        int age = sc.nextInt();
+
+        System.out.print("Marks: ");
+        int marks = sc.nextInt();
+
+        Student s = new Student();
+        s.age = age;
 
         System.out.println("Student Object Created");
-        System.out.println("Object Identity Hash Code: " + System.identityHashCode(s));
-        s.display();
+        System.out.println("Object Identity Hash Code: "
+                + System.identityHashCode(s));
+
+        s.display(marks);
+
+        sc.close();
     }
 }
 ```
@@ -88,49 +103,56 @@ show() -> Executes in its own method frame
 
 ### Solution: `Employee.java`
 ```java
+
 import java.util.Scanner;
 
-public class Employee {
-    int salary;                    // instance variable -> heap, inside the Employee object
+class Employee {
+    int salary; // Instance variable
 
-    Employee(int salary) {
-        this.salary = salary;
-    }
-
-    void display(int bonusInput) {
-        int bonus = bonusInput;    // local variable -> stack frame of display()
+    void display(int b) {
+        int bonus = b; // Local variable
 
         System.out.println("\nInside display() Method:");
         System.out.println("Salary (Instance Variable): " + salary);
         System.out.println("Bonus (Local Variable): " + bonus);
 
-        // Local inner class declared inside a method
+        // Local Inner Class
         class Report {
             void show() {
-                // show() runs in its own stack frame
                 System.out.println("Report: Employee salary is " + salary);
             }
         }
 
-        Report r = new Report();   // Report object -> heap
+        // Create Report object
+        Report r = new Report();
+
         System.out.println("\nReport Object Created");
-        System.out.println("Report Identity Hash Code: " + System.identityHashCode(r));
+        System.out.println("Report Identity Hash Code: "
+                + System.identityHashCode(r));
+
         r.show();
     }
+}
 
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter salary: ");
         int salary = sc.nextInt();
+
         System.out.print("Enter bonus: ");
         int bonus = sc.nextInt();
 
-        Employee emp = new Employee(salary);   // 'emp' reference -> stack, object -> heap
-        System.out.println("\nEmployee Object Created");
-        System.out.println("Employee Identity Hash Code: " + System.identityHashCode(emp));
+        // Create Employee object
+        Employee e = new Employee();
+        e.salary = salary;
 
-        emp.display(bonus);
+        System.out.println("\nEmployee Object Created");
+        System.out.println("Employee Identity Hash Code: "
+                + System.identityHashCode(e));
+
+        e.display(bonus);
 
         System.out.println("\nMemory Concept:");
         System.out.println("Employee object -> Heap");
@@ -141,6 +163,7 @@ public class Employee {
 
         sc.close();
     }
+}
 }
 ```
 
